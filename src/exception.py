@@ -1,5 +1,5 @@
 import sys
-import logging
+from src.logger import logging
 
 # Configure logging once
 logging.basicConfig(
