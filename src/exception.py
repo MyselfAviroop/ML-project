@@ -8,16 +8,17 @@ logging.basicConfig(
     handlers=[logging.StreamHandler()]  # logs to console
 )
 
-def error_message_detail(error: Exception) -> str:
-    _, _, exc_tb = sys.exc_info()
+def error_message_detail(error: Exception, error_detail: sys = None) -> str:
+    """Extract detailed error message with file and line number."""
+    _, _, exc_tb = sys.exc_info() if error_detail is None else error_detail.exc_info()
     file_name = exc_tb.tb_frame.f_code.co_filename
-    return f"Error in [{file_name}] at line [{exc_tb.tb_lineno}]: {error}"
+    line_number = exc_tb.tb_lineno
+    return f"Error in [{file_name}] at line [{line_number}]: {error}"
 
-class CustomException(Exception):   
-    def __init__(self, error: Exception):
+class CustomException(Exception):
+    def __init__(self, error: Exception, error_detail: sys = None):
         super().__init__(error)
-        self.error = error
+        self.error_message = error_message_detail(error, error_detail)
 
     def __str__(self):
-        return error_message_detail(self.error)
-
+        return self.error_message

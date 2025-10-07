@@ -3,13 +3,16 @@ from typing import List
 
 def get_requirements(file_path: str) -> List[str]:
     """Read dependencies from requirements.txt"""
+    requirements = []
     with open(file_path) as f:
-        requirements = f.readlines()
-    # strip whitespace and ignore empty lines
-    return [req.strip() for req in requirements if req.strip()]
+        for line in f:
+            req = line.strip()
+            if req and req != "-e .":  # skip editable install
+                requirements.append(req)
+    return requirements
 
 setup(
-    name="ML_Project",
+    name="ML_Project",   # 🚨 avoid spaces in project name
     version="0.1",
     author="Aviroop",
     author_email="ghoshaviroop542@gmail.com",
