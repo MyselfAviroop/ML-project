@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Exam Performance Predictor</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #e2e8f0;
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #3b82f6;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #94a3b8;
+      margin-bottom: 40px;
+      text-align: center;
+      max-width: 600px;
+    }
+
+    form {
+      background: #1e293b;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #93c5fd;
+      font-weight: 500;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      background-color: #0f172a;
+      color: #e2e8f0;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    select:focus, input:focus {
+      border-color: #3b82f6;
+    }
+
+    button {
+      width: 100%;
+      background-color: #3b82f6;
+      border: none;
+      color: white;
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #2563eb;
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 1.2rem;
+      color: #22c55e;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    footer {
+      margin-top: 40px;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Student Exam Performance Predictor</h1>
+  <p>Enter student details below to predict their expected <strong>math score</strong>.</p>
+
+<form action="{{ url_for('predict') }}" method="post">
+
+    <label for="gender">Gender:</label>
+    <select name="gender" id="gender" required>
+      <option value="">-- Select --</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+
+    <label for="race_ethnicity">Race/Ethnicity:</label>
+    <select name="race_ethnicity" id="race_ethnicity">
+
+      <option value="">-- Select --</option>
+      <option value="group A">Group A</option>
+      <option value="group B">Group B</option>
+      <option value="group C">Group C</option>
+      <option value="group D">Group D</option>
+      <option value="group E">Group E</option>
+    </select>
+
+    <label for="parental_level_of_education">Parental Level of Education:</label>
+    <select name="parental_level_of_education" id="parental_level_of_education" required>
+      <option value="">-- Select --</option>
+      <option value="some high school">Some High School</option>
+      <option value="high school">High School</option>
+      <option value="some college">Some College</option>
+      <option value="associate's degree">Associate's Degree</option>
+      <option value="bachelor's degree">Bachelor's Degree</option>
+      <option value="master's degree">Master's Degree</option>
+    </select>
+
+    <label for="lunch">Lunch Type:</label>
+    <select name="lunch" id="lunch" required>
+      <option value="">-- Select --</option>
+      <option value="standard">Standard</option>
+      <option value="free/reduced">Free/Reduced</option>
+    </select>
+
+    <label for="test_preparation_course">Test Preparation Course:</label>
+    <select name="test_preparation_course" id="test_preparation_course" required>
+      <option value="">-- Select --</option>
+      <option value="none">None</option>
+      <option value="completed">Completed</option>
+    </select>
+
+    <label for="reading_score">Reading Score (0–100):</label>
+    <input type="number" id="reading_score" name="reading_score" min="0" max="100" required>
+
+    <label for="writing_score">Writing Score (0–100):</label>
+    <input type="number" id="writing_score" name="writing_score" min="0" max="100" required>
+
+    <button type="submit">Predict Math Score</button>
+  </form>
+
+  {% if results %}
+  <div class="result">
+    Predicted Math Score: {{ results }}
+  </div>
+  {% endif %}
+
+  <footer>
+    <p>© 2025 Student Performance Predictor | ML Model Trainer</p>
+  </footer>
+</body>
+</html>
